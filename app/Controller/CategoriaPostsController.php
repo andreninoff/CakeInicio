@@ -11,9 +11,7 @@ class CategoriaPostsController extends AppController {
 		$this->CategoriaPost->recursive = 0;
 		$this->paginate = array('order' => array('id' => 'desc'), 'limit' => 2);
 		if($this->request->isPost()){
-			foreach($this->request->data['CategoriaPost']['excluir'] as $id){
-				$this->excluirMultiplas($id);
-			}
+			$this->excluir();
 			$this->redirect(array('action' => 'index'));
 		}
 		$this->set('categorias', $this->paginate("CategoriaPost"));
@@ -66,14 +64,18 @@ class CategoriaPostsController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
 	
-	private function excluirMultiplas($id){
-		$this->CategoriaPost->id = $id;
-		if (!$this->CategoriaPost->exists()) {
-			throw new NotFoundException(__('Categoria não encontrado'));
-		}
-		$categoria = $this->CategoriaPost->read(null, $id);
-		if ($this->CategoriaPost->delete()) {
-			$this->Session->setFlash(__('Categoria(s) apagada(s)'));
+	private function excluir(){
+		if(!empty($this->request->data)){
+			foreach($this->request->data['CategoriaPost']['excluir'] as $id){
+				$this->CategoriaPost->id = $id;
+				if(!$this->CategoriaPost->exists()){
+					throw new NotFoundException(__('Categoria não encontrado'));
+				}
+				$this->CategoriaPost->read(null, $id);
+				if ($this->CategoriaPost->delete()) {
+					$this->Session->setFlash(__('Categoria(s) apagada(s)'));
+				}
+			}
 		}
 	}
 }

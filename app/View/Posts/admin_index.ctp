@@ -6,7 +6,7 @@
 	<tr>
 			<th class="actions">&nbsp;</th>
 			<th><?php echo $this->Paginator->sort('id');?></th>
-			<th><?php echo $this->Paginator->sort('categoria_post_id', 'titulo');?></th>
+			<th><?php echo $this->Paginator->sort('categoria_post_id', 'Categoria');?></th>
 			<th><?php echo $this->Paginator->sort('titulo');?></th>
 			<th><?php echo $this->Paginator->sort('texto');?></th>
 			<th><?php echo $this->Paginator->sort('publicado');?></th>

@@ -29,9 +29,7 @@ class PostsController extends AppController {
 		$this->Post->recursive = 0;
 		$this->paginate = array('order' => array('id' => 'desc'), 'limit' => 2);
 		if($this->request->isPost()){
-			foreach($this->request->data['Post']['excluir'] as $id){
-				$this->excluirMultiplas($id);
-			}
+			$this->excluir();
 			$this->redirect(array('action' => 'index'));
 		}
 		$this->set('posts', $this->paginate());
@@ -90,14 +88,18 @@ class PostsController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
 	
-	private function excluirMultiplas($id){
-		$this->Post->id = $id;
-		if (!$this->Post->exists()) {
-			throw new NotFoundException(__('Post não encontrado'));
-		}
-		$categoria = $this->Post->read(null, $id);
-		if ($this->Post->delete()) {
-			$this->Session->setFlash(__('Post(s) apagado(s)'));
+	private function excluir(){
+		if(!empty($this->request->data)){
+			foreach($this->request->data['Post']['excluir'] as $id){
+				$this->Post->id = $id;
+				if(!$this->Post->exists()){
+					throw new NotFoundException(__('Post não encontrado'));
+				}
+				$this->Post->read(null, $id);
+				if ($this->Post->delete()) {
+					$this->Session->setFlash(__('Post(s) apagado(s)'));
+				}
+			}
 		}
 	}
 }

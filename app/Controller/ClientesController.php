@@ -16,9 +16,7 @@ class ClientesController extends AppController {
 		$this->Cliente->recursive = 0;
 		$this->paginate = array('order' => array('id' => 'desc'), 'limit' => 2);
 		if($this->request->isPost()){
-			foreach($this->request->data['Cliente']['excluir'] as $id){
-				$this->excluirMultiplas($id);
-			}
+			$this->excluir();
 			$this->redirect(array('action' => 'index'));
 		}
 		$this->set('clientes', $this->paginate());
@@ -72,14 +70,18 @@ class ClientesController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
 	
-	private function excluirMultiplas($id){
-		$this->Cliente->id = $id;
-		if (!$this->Cliente->exists()) {
-			throw new NotFoundException(__('Cliente não encontrado'));
-		}
-		$categoria = $this->Cliente->read(null, $id);
-		if ($this->Cliente->delete()) {
-			$this->Session->setFlash(__('Cliente(s) apagado(s)'));
+	private function excluir(){
+		if(!empty($this->request->data)){
+			foreach($this->request->data['Cliente']['excluir'] as $id){
+				$this->Cliente->id = $id;
+				if(!$this->Cliente->exists()){
+					throw new NotFoundException(__('Cliente não encontrado'));
+				}
+				$this->Cliente->read(null, $id);
+				if ($this->Cliente->delete()) {
+					$this->Session->setFlash(__('Cliente(s) apagado(s)'));
+				}
+			}
 		}
 	}
 }

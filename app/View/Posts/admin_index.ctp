@@ -48,5 +48,6 @@
 	<h3><?php echo __('MENU'); ?></h3>
 	<ul>
 		<li><?php echo $this->Html->link(__('Categorias do Post'), array('controller' =>'categoriaPosts')); ?></li>
+		<li><?php echo $this->Html->link(__('Clientes'), array('controller' =>'clientes')); ?></li>
 	</ul>
 </div>

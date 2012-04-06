@@ -8,7 +8,7 @@ App::uses('AppController', 'Controller');
 class PostsController extends AppController { 
 
 	public function index() {
-		$registros = $this->Post->find('all', array('Post.conditions' => array('publicado' => 1)));
+		$registros = $this->Post->find('all', array('Post.conditions' => array('publicado' => "ativo")));
 		$this->set('registros', $registros);
 	}
 

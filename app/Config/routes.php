@@ -34,6 +34,7 @@
 	 * //www.site.com.br/hash
 	 */
 	Router::connect('/posts', array('controller' => 'posts', 'action' => 'index', 'home'));
+	Router::connect('/login', array('controller' => 'login', 'action' => 'index', 'login'));
 	Router::connect('/:hash',  array('controller' => 'posts', 'action' => 'view'), array('pass' => array('hash'))); 
 	
 	/*

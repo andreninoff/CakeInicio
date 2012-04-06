@@ -5,7 +5,7 @@ App::uses('AppController', 'Controller');
  *
  * @property Post $Post
  */
-class PostsController extends AppController {
+class PostsController extends AppController { 
 
 	public function index() {
 		$registros = $this->Post->find('all', array('conditions' => array('publicado' => 1)));

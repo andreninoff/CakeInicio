@@ -7,7 +7,7 @@
 			<?php
 			echo $this->Html->link(
 			    $dado['Post']['titulo'],
-			    array('controller' => 'posts', 'action' => 'view', $dado['Post']['id'], $dado['Post']['hash'].".html")
+			    array('controller' => '', 'action' => $dado['Post']['hash'])
 			);
 			?>
 		</li>

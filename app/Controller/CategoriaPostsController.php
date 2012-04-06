@@ -9,17 +9,17 @@ class CategoriaPostsController extends AppController {
 
 	public function admin_index() {
 		$this->CategoriaPost->recursive = 0;
-		$this->set('categorias', $this->paginate());
-	}
-
-	public function admin_view($id = null) {
-		$this->CategoriaPost->id = $id;
-		if (!$this->CategoriaPost->exists()) {
-			throw new NotFoundException(__('Categoria não encontrado'));
+		$this->paginate = array('order' => array('id' => 'desc'), 'limit' => 2);
+		if($this->request->isPost()){
+			foreach($this->request->data['CategoriaPost']['excluir'] as $id){
+				$this->excluirMultiplas($id);
+			}
+			$this->redirect(array('action' => 'index'));
 		}
-		$this->set('categoria', $this->CategoriaPost->read(null, $id));
+		$this->set('categorias', $this->paginate("CategoriaPost"));
 	}
-
+	
+	
 	public function admin_add() {
 		if ($this->request->is('post')) {
 			$this->CategoriaPost->create();
@@ -64,5 +64,16 @@ class CategoriaPostsController extends AppController {
 		}
 		$this->Session->setFlash(__('Por favor, preencha os campos corretamente'));
 		$this->redirect(array('action' => 'index'));
+	}
+	
+	private function excluirMultiplas($id){
+		$this->CategoriaPost->id = $id;
+		if (!$this->CategoriaPost->exists()) {
+			throw new NotFoundException(__('Categoria não encontrado'));
+		}
+		$categoria = $this->CategoriaPost->read(null, $id);
+		if ($this->CategoriaPost->delete()) {
+			$this->Session->setFlash(__('Categoria(s) apagada(s)'));
+		}
 	}
 }

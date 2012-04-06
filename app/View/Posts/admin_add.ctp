@@ -1,20 +1,22 @@
 <div class="posts form">
 <?php echo $this->Form->create('Post');?>
 	<fieldset>
-		<legend><?php echo __('Add Post'); ?></legend>
+		<legend><?php echo __('Post > Inserir'); ?></legend>
 	<?php
+		echo $this->Form->label('Post.Categoria');
 		echo $this->Form->select('categoria_post_id', array($categorias));
 		echo $this->Form->input('titulo');
 		echo $this->Form->input('texto');
-		echo $this->Form->select('publicado', array("ativo" => "Ativo", "inativo" => "Inativo"));
+		echo $this->Form->label('Post.Publicado');
+		echo $this->Form->select('Post.publicado', array('ativo' => 'Ativo', 'inativo' => 'Inativo'));
 	?>
 	</fieldset>
-<?php echo $this->Form->end(__('Submit'));?>
+<?php echo $this->Form->end(__('Salvar'));?>
 </div>
 <div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
+	<h3><?php echo __('AÇÃO'); ?></h3>
 	<ul>
 
-		<li><?php echo $this->Html->link(__('List Posts'), array('action' => 'index'));?></li>
+		<li><?php echo $this->Html->link(__('Voltar'), array('action' => 'index'));?></li>
 	</ul>
 </div>

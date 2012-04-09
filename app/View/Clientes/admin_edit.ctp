@@ -8,8 +8,8 @@
 		echo $this->Form->input('email');
 		echo $this->Form->input('login');
 		echo $this->Form->password('senha');
-		echo $this->Form->label('Post.Publicado');
-		echo $this->Form->select('publicado', array("ativo" => "Ativo", "inativo" => "Inativo"));
+		echo $this->Form->label('Publicado');
+		echo $this->Form->select('Cliente.publicado', array("ativo" => "Ativo", "inativo" => "Inativo"));
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Salvar'));?>

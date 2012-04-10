@@ -13,7 +13,7 @@ class LoginController extends AppController {
 		    'Basic' => array('userModel' => 'Cliente')
 		);
 	}
-	
+
    public $components = array(
 	    'Auth' => array(
 	        'authError' => 'Did you really think you are allowed to see that?',

@@ -20,27 +20,37 @@
  * @since         CakePHP(tm) v 0.2.9
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
+
 /**
  * Here, we are connecting '/' (base path) to controller called 'Pages',
  * its action called 'display', and we pass a param to select the view file
  * to use (in this case, /app/View/Pages/home.ctp)...
  */
 	Router::connect('/', array('controller' => 'posts', 'action' => 'index', 'home'));
-	
+
+	/**
+	 * fazendo dessa forma evita, por exemplo, que /clientes seja redirecionado para /posts pq nao achou a hash 'clientes',
+	 * quando na verdade a intenção era acessar o controlador de clientes.
+	 * Evita também de ter que declarar rotas para todos os controllers por conta desse comportamento.
+	 */
+	App::uses('PostRoute', 'Lib/routes');
+	Router::connect('/:hash', array('controller' => 'posts', 'action' => 'view'), array('pass' => array('hash'), 'routeClass' => 'PostRoute'));
+
 /**
  * ...and connect the rest of 'Pages' controller's urls.
  */
+
 	/*
 	 * //www.site.com.br/hash
 	 */
-	Router::connect('/posts', array('controller' => 'posts', 'action' => 'index', 'home'));
-	Router::connect('/login', array('controller' => 'login', 'action' => 'index', 'login'));
-	Router::connect('/:hash',  array('controller' => 'posts', 'action' => 'view'), array('pass' => array('hash'))); 
+//	Router::connect('/posts', array('controller' => 'posts', 'action' => 'index', 'home'));
+//	Router::connect('/login', array('controller' => 'login', 'action' => 'index', 'login'));
+//	Router::connect('/:hash',  array('controller' => 'posts', 'action' => 'view'), array('pass' => array('hash'))); 
 	
 	/*
 	 * www.site.com.br/posts/hash
 	 */
-	Router::connect('/posts/:hash',  array('controller' => 'posts', 'action' => 'view'), array('pass' => array('hash')));
+//	Router::connect('/posts/:hash',  array('controller' => 'posts', 'action' => 'view'), array('pass' => array('hash')));
 
 /**
  * Load all plugin routes.  See the CakePlugin documentation on 
